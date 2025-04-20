@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAPS 음원 공유유</title>
+    <title>PAPS 음원 공유</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -126,11 +126,21 @@
                 <h2 class="text-lg font-semibold">왕복 오래 달리기</h2>
                 <p class="text-gray-400 text-sm">음원</p>
             </div>
-            <button id="play-pause" class="text-white font-bold py-2 px-4 rounded text-xl">
+            <button id="play-pause-왕복오래달리기" class="text-white font-bold py-2 px-4 rounded text-xl">
                 ▶
             </button>
         </div>
-        <audio id="audio" src="https://papsmaster.netlify.app/%EC%99%95%EB%B3%B5%EC%98%A4%EB%9E%98%EB%8B%AC%EB%A6%AC%EA%B8%B0%20%EC%9D%8C%EC%9B%90.mp3"></audio>
+        <div class="bg-gray-700 rounded-lg p-3 flex items-center justify-between mb-4">
+            <div>
+                <h2 class="text-lg font-semibold">윗몸 말아올리기</h2>
+                <p class="text-gray-400 text-sm">음원</p>
+            </div>
+            <button id="play-pause-윗몸말아올리기" class="text-white font-bold py-2 px-4 rounded text-xl">
+                ▶
+            </button>
+        </div>
+        <audio id="audio-왕복오래달리기" src="https://papsmaster.netlify.app/%EC%99%95%EB%B3%B5%EC%98%A4%EB%9E%98%EB%8B%AC%EB%A6%AC%EA%B8%B0%20%EC%9D%8C%EC%9B%90.mp3"></audio>
+        <audio id="audio-윗몸말아올리기" src="https://papsmaster.netlify.app/%EC%9C%97%EB%AA%B8%EB%A7%90%EC%95%84%EC%98%AC%EB%A6%AC%EA%B8%B0%20%EC%9D%8C%EC%9B%90.mp3"></audio>
     </div>
 
     <div id="audio-player-container" class="hidden">
@@ -138,7 +148,7 @@
             ▶
         </button>
         <div class="track-info">
-            <div class="title">왕복 오래 달리기</div>
+            <div class="title"></div>
             <div class="artist">음원</div>
         </div>
         <div class="progress-bar">
@@ -147,8 +157,15 @@
     </div>
 
     <script>
-        const audio = document.getElementById('audio');
-        const playPauseButton = document.getElementById('play-pause');
+        const audioElements = {
+            "왕복오래달리기": document.getElementById('audio-왕복오래달리기'),
+            "윗몸말아올리기": document.getElementById('audio-윗몸말아올리기'),
+        };
+        const playPauseButtons = {
+            "왕복오래달리기": document.getElementById('play-pause-왕복오래달리기'),
+            "윗몸말아올리기": document.getElementById('play-pause-윗몸말아올리기'),
+        };
+
         const progressBarFill = document.querySelector('.progress-bar-fill');
         const progressBar = document.querySelector('.progress-bar');
         const audioPlayerContainer = document.getElementById('audio-player-container');
@@ -156,55 +173,78 @@
         const trackTitle = document.querySelector('.track-info .title');
         const trackArtist = document.querySelector('.track-info .artist');
 
-
         let isPlaying = false;
+        let currentlyPlaying = null;
         let playerVisible = false;
 
-        playPauseButton.addEventListener('click', () => {
-            togglePlayPause();
-        });
+        for (const key in playPauseButtons) {
+            playPauseButtons[key].addEventListener('click', () => {
+                togglePlayPause(key);
+            });
+        }
 
         playPauseButtonBottom.addEventListener('click', () => {
-            togglePlayPause();
+            if (currentlyPlaying) {
+                togglePlayPause(currentlyPlaying);
+            }
         });
 
 
-        function togglePlayPause() {
-            if (isPlaying) {
+        function togglePlayPause(trackName) {
+            const audio = audioElements[trackName];
+            const button = playPauseButtons[trackName];
+
+            if (isPlaying && currentlyPlaying === trackName) {
                 audio.pause();
-                playPauseButton.textContent = '▶';
+                button.textContent = '▶';
                 playPauseButtonBottom.textContent = '▶';
+                isPlaying = false;
             } else {
+                if (currentlyPlaying && currentlyPlaying !== trackName) {
+                    audioElements[currentlyPlaying].pause();
+                    playPauseButtons[currentlyPlaying].textContent = '▶';
+                }
                 audio.play();
-                playPauseButton.textContent = '⏸';
+                button.textContent = '⏸';
                 playPauseButtonBottom.textContent = '⏸';
+                isPlaying = true;
+                currentlyPlaying = trackName;
+                trackTitle.textContent = trackName; // Update track title
                 if (!playerVisible) {
                     audioPlayerContainer.classList.remove('hidden');
                     playerVisible = true;
                 }
             }
-            isPlaying = !isPlaying;
         }
 
-        audio.addEventListener('timeupdate', () => {
-            const progress = (audio.currentTime / audio.duration) * 100;
-            progressBarFill.style.width = `${progress}%`;
-        });
+        for (const key in audioElements) {
+            audioElements[key].addEventListener('timeupdate', () => {
+                if (isPlaying && currentlyPlaying === key) {
+                    const progress = (audioElements[key].currentTime / audioElements[key].duration) * 100;
+                    progressBarFill.style.width = `${progress}%`;
+                }
+            });
+        }
 
         progressBar.addEventListener('click', (event) => {
-            const rect = progressBar.getBoundingClientRect();
-            const pos = (event.clientX - rect.left) / rect.width;
-            audio.currentTime = pos * audio.duration;
+            if (currentlyPlaying) {
+                const rect = progressBar.getBoundingClientRect();
+                const pos = (event.clientX - rect.left) / rect.width;
+                audioElements[currentlyPlaying].currentTime = pos * audioElements[currentlyPlaying].duration;
+            }
         });
 
-        audio.addEventListener('ended', () => {
-            playPauseButton.textContent = '▶';
-            playPauseButtonBottom.textContent = '▶';
-            isPlaying = false;
-            progressBarFill.style.width = '0%';
-            audioPlayerContainer.classList.add('hidden');
-            playerVisible = false;
-        });
+        for (const key in audioElements) {
+            audioElements[key].addEventListener('ended', () => {
+                playPauseButtons[key].textContent = '▶';
+                playPauseButtonBottom.textContent = '▶';
+                isPlaying = false;
+                currentlyPlaying = null;
+                progressBarFill.style.width = '0%';
+                audioPlayerContainer.classList.add('hidden');
+                playerVisible = false;
+            });
+        }
 
         // Update track info (optional, if you have dynamic track information)
         // trackTitle.textContent = "Song Title";
