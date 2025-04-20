@@ -3,118 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Design</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>색칠놀이 도안 공유 플랫폼</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      .spotify-green {
-        background-color: #1DB954;
-      }
-      .spotify-black {
-        background-color: #121212;
-      }
-      .spotify-white {
-        color: #FFFFFF;
-      }
-      .spotify-gray {
-        color: #B3B3B3;
-      }
-      .spotify-gradient {
-        background: linear-gradient(135deg, #450af5, #c4efd9);
-      }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #4f46e5; /* Tailwind의 indigo-600 */
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #6b7280; /* Tailwind의 gray-500 */
+        }
+        #upload-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 0.5rem; /* Tailwind의 rounded-md */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind의 shadow-md */
+            margin-bottom: 20px;
+        }
+        #upload-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #374151; /* Tailwind의 gray-700 */
+        }
+        #upload-form input[type="file"] {
+            margin-bottom: 15px;
+        }
+        #upload-form button {
+            background-color: #4f46e5; /* Tailwind의 bg-indigo-600 */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 0.375rem; /* Tailwind의 rounded-md */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            border: none;
+        }
+        #upload-form button:hover {
+            background-color: #4338ca; /* Tailwind의 hover:bg-indigo-700 */
+        }
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .thumbnail {
+            background-color: white;
+            padding: 10px;
+            border-radius: 0.5rem; /* Tailwind의 rounded-md */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind의 shadow-md */
+        }
+        .thumbnail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.375rem; /* Tailwind의 rounded-md */
+        }
+        .thumbnail p {
+            margin-top: 5px;
+            font-size: 0.875rem; /* Tailwind의 text-sm */
+            color: #4b5563; /* Tailwind의 gray-600 */
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        #modal img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 0.5rem; /* Tailwind의 rounded-md */
+        }
+        #modal .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <header class="spotify-black py-4 px-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold spotify-green">Spotify</h1>
-            <nav class="hidden md:block">
-                <ul class="flex space-x-6">
-                    <li><a href="#" class="hover:text-gray-300 transition duration-300">Home</a></li>
-                    <li><a href="#" class="hover:text-gray-300 transition duration-300">Search</a></li>
-                    <li><a href="#" class="hover:text-gray-300 transition duration-300">Library</a></li>
-                </ul>
-            </nav>
-            <button class="md:hidden text-gray-300 focus:outline-none" aria-label="Toggle Menu">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-            </button>
-        </div>
-    </header>
+<body class="bg-gray-100"> <div class="container">
+        <h1>색칠놀이 도안 공유 플랫폼</h1>
+        <p>자신이 만든 색칠놀이 도안을 공유하고, 다른 사람들이 공유한 도안을 다운로드 받으세요.</p>
 
-    <main class="container mx-auto py-10 px-6">
-        <section class="spotify-gradient rounded-lg p-6 md:p-8 mb-8">
-            <h2 class="text-3xl md:text-4xl font-bold spotify-white mb-4">Welcome to Spotify</h2>
-            <p class="text-lg spotify-gray mb-6">Discover new music, podcasts, and shows you'll love.</p>
-            <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 md:px-8 rounded-full transition duration-300">Sign Up Free</button>
-        </section>
+        <form id="upload-form" class="mb-8"> <label for="file-upload">도안 업로드:</label>
+            <input type="file" id="file-upload" accept="image/*" required>
+            <button type="submit">업로드</button>
+        </form>
 
-        <section class="mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold spotify-white mb-6">Featured Playlists</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                <div class="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="w-full h-48 bg-gray-700 rounded-md mb-4 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12 h-12 text-gray-400">
-                            <path d="M6.3 2.841A1.5 1.5 0 0 0 4.8 4.219v10.922a1.5 1.5 0 0 0 1.5 1.378h8.4a1.5 1.5 0 0 0 1.5-1.378V4.218a1.5 1.5 0 0 0-1.5-1.377H6.3Z" />
-                            <path d="M8 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                            <path d="M14 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold spotify-white mb-2">Playlist Title 1</h3>
-                    <p class="text-sm spotify-gray">Description of playlist 1.</p>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="w-full h-48 bg-gray-700 rounded-md mb-4 flex items-center justify-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12 h-12 text-gray-400">
-                            <path d="M6.3 2.841A1.5 1.5 0 0 0 4.8 4.219v10.922a1.5 1.5 0 0 0 1.5 1.378h8.4a1.5 1.5 0 0 0 1.5-1.378V4.218a1.5 1.5 0 0 0-1.5-1.377H6.3Z" />
-                            <path d="M8 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                            <path d="M14 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold spotify-white mb-2">Playlist Title 2</h3>
-                    <p class="text-sm spotify-gray">Description of playlist 2.</p>
-                </div>
-                <div class="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300">
-                    <div class="w-full h-48 bg-gray-700 rounded-md mb-4 flex items-center justify-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12 h-12 text-gray-400">
-                            <path d="M6.3 2.841A1.5 1.5 0 0 0 4.8 4.219v10.922a1.5 1.5 0 0 0 1.5 1.378h8.4a1.5 1.5 0 0 0 1.5-1.378V4.218a1.5 1.5 0 0 0-1.5-1.377H6.3Z" />
-                            <path d="M8 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                            <path d="M14 6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold spotify-white mb-2">Playlist Title 3</h3>
-                    <p class="text-sm spotify-gray">Description of playlist 3.</p>
-                </div>
+        <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             </div>
-        </section>
-    </main>
 
-    <footer class="spotify-black py-6 px-6">
-        <div class="container mx-auto text-center spotify-gray text-sm">
-            <p>&copy; 2024 Spotify AB</p>
-            <p>
-                <a href="#" class="hover:text-white transition duration-300">Legal</a>
-                <span class="mx-2">•</span>
-                <a href="#" class="hover:text-white transition duration-300">Privacy Policy</a>
-                <span class="mx-2">•</span>
-                <a href="#" class="hover:text-white transition duration-300">Cookies</a>
-            </p>
+        <div id="modal">
+            <span class="close-button">&times;</span>
+            <img id="modal-img" src="">
         </div>
-    </footer>
+    </div>
 
     <script>
-        const mobileMenuButton = document.querySelector('header button');
-        const nav = document.querySelector('header nav');
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeButton = modal.querySelector('.close-button');
+        const uploadForm = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-upload');
 
-        if (mobileMenuButton && nav) {
-            mobileMenuButton.addEventListener('click', () => {
-                nav.classList.toggle('hidden');
+        let drawings = [];
+
+        if (localStorage.getItem('drawings')) {
+            drawings = JSON.parse(localStorage.getItem('drawings'));
+            renderGallery();
+        }
+
+        uploadForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const newDrawing = {
+                    id: Date.now(),
+                    url: e.target.result,
+                    filename: file.name
+                };
+                drawings.push(newDrawing);
+                localStorage.setItem('drawings', JSON.stringify(drawings));
+                renderGallery();
+                uploadForm.reset();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function renderGallery() {
+            gallery.innerHTML = '';
+            drawings.forEach(drawing => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'thumbnail';
+                thumbnail.innerHTML = `
+                    <img src="${drawing.url}" alt="${drawing.filename}">
+                    <p>${drawing.filename}</p>
+                `;
+                thumbnail.addEventListener('click', () => {
+                    modalImg.src = drawing.url;
+                    modal.style.display = 'flex';
+                });
+                gallery.appendChild(thumbnail);
             });
         }
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
